@@ -36,6 +36,12 @@ with app.app_context():
 def load_user(staff_id):
     return Staff.query.get(staff_id)
 
+@app.route("/")
+def origin():
+    if current_user.is_authenticated:
+        return redirect(url_for("dashboard"))
+    else:
+        return redirect(url_for("login"))
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -351,4 +357,4 @@ def chart_data():
     return jsonify(data)
 
 if __name__ == '__main__':
-    socket.run()
+    socket.run(app)
