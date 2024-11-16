@@ -1,0 +1,95 @@
+<html>
+<head><title>Admin</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/vendors/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/css/vendors/line-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/pages/layout.css"/>
+    <link rel="icon" href="/static/images/covid-19.ico"/>
+    <script src="/static/js/vendors/jquery.min.js"></script>
+    <script src="/static/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/global.js"></script>
+    <link rel="stylesheet" href="/static/css/pages/settings.css"/>
+</head>
+<body>
+<main>
+    {% include "sidebar.html" %}
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="section"><h5 class="page-title">settings</h5></div>
+            <div class="section profile-section">
+                <div class="card container">
+                    <div class="card-header"><h5>personal details</h5>
+                        <p>This section contains your basic profile information like name, email etc</p></div>
+                    <div class="card-body">
+
+                        <div class="sub-section col-md-12 col-lg-8">
+                            <div class="sub-section-title"><h6>profile details</h6></div>
+                            <div class="sub-section-body">
+                                <div class="user-details-form">
+                                    <form name="profile" action="{{ url_for("settings") }}" method="post">
+                                        <input type="hidden" name="form_name" value="profile">
+
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-8">
+                                            <label>Name</label>
+                                            <input name="name" class="form-control" value="{{ current_user.name }}"/>
+                                        </div>
+                                        <div class="form-group col-sm-8 col-md-12 col-lg-8">
+                                            <label>email address</label>
+                                            <input name="email" class="form-control" value="{{ current_user.email }}"/>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-dark-red-f-gr mt-4"><i class="las la-save"></i>save changes
+                                    </button>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card container">
+                    <div class="card-header"><h5>password</h5>
+                        <p>A secure password and updated recovery info help protect your account.</p></div>
+                    <div class="card-body">
+                        <div class="sub-section col-sm-8 col-md-12 col-lg-8">
+                            <div class="sub-section-body">
+                                <div class="user-password-form">
+                                    <form action="{{ url_for("settings") }}" method="post">
+                                    <div class="form-row">
+                                        <input type="hidden" name="form_name" value="password">
+                                        <div class="form-group col-sm-8">
+                                            <label>current password</label>
+                                            <input class="form-control" name="old_password" value="password" type="password"/>
+                                        </div>
+
+                                        <div class="form-group col-sm-8">
+                                            <label>new password</label>
+                                            <input
+                                                class="form-control" name="new_password" value="abc@def.com" type="password"/>
+                                        </div>
+
+                                        <div class="form-group col-sm-8">
+                                            <label>re-type new password</label>
+                                            <input class="form-control" name="conf_new_password" value="abc@def.com" type="password"/>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark-red-f-gr mt-4"><i class="las la-sync"></i>change my
+                                        password
+                                    </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

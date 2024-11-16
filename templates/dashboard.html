@@ -1,0 +1,241 @@
+<html>
+<head>
+    <title>Admin</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/vendors/bootstrap.min.css"/>
+    <link
+            rel="stylesheet"
+            href="/static/css/vendors/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/pages/layout.css"/>
+    <link rel="icon" href="/static/images/covid-19.ico"/>
+    <script src="/static/js/vendors/jquery.min.js"></script>
+    <script src="/static/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/global.js"></script>
+    <link rel="stylesheet" href="/static/css/pages/dashboard.css"/>
+    <link rel="stylesheet" href="/static/css/vendors/Chart.min.css"/>
+    <script src="/static/js/vendors/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"></script>
+
+    <script src="/static/js/dashboard.js"></script>
+</head>
+<body>
+
+<main>
+    {% include "sidebar.html" %}
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="section">
+                <div class="row">
+                    <div class="col-md-6"><h5 class="page-title"></h5></div>
+                </div>
+            </div>
+            <div class="section welcome-section">
+                <div class="section-content">
+                    <div class="card-deck">
+                        <div class="card welcome-content-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div
+                                            class="col-md-12 welcome-text-wrapper align-self-center"
+                                    >
+                                        <h5>hello, {{ current_user.name }}</h5>
+                                        <p>Welcome to your dashboard</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card app-stats-card">
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-md-6">
+                                        <i
+                                                class="las la-user-injured la-3x align-self-center"
+                                        ></i>
+                                        <p>total patients</p>
+                                        <h4><a href="">{{ current_user.hospital.patients.count() }}</a></h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <i class="las la-user-md la-3x align-self-center"></i>
+                                        <p>total doctors</p>
+                                        <h4><a href="">{{ specialists_count }}</a></h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section functionality-section">
+                <div class="section-content">
+                    <div class="card-deck">
+                        <a class="card text-center" href="{{ url_for("specialist") }}"
+                        >
+                            <div class="card-title">
+                                <div class="icon-wrapper">
+                                    <i class="las la-user-md"></i>
+                                </div>
+                            </div>
+                            <div class="card-body"><p>add a specialist</p></div>
+                        </a
+                        ><a class="card text-center" href="{{ url_for("new_admin") }}"
+                    >
+                        <div class="card-title">
+                            <div class="icon-wrapper">
+                                <i class="las la-user-lock"></i>
+                            </div>
+                        </div>
+                        <div class="card-body"><p>add an admin</p></div>
+                    </a
+                    >
+                    </div>
+                </div>
+            </div>
+            <div class="section card-summaries">
+                <div class="section-content">
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="card-header"><h5>recent activities</h5></div>
+                            <div class="card-body">
+                                <canvas id="enrollments-chart"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-deck">
+
+                        <div class="card total-counts-summary">
+                            <div class="card-header"><h5>total counts</h5></div>
+                            <div class="card-body">
+                                <div class="row text-center text-capitalize">
+                                    <div class="col-md-6">
+                                        <i class="las la-users la-2x mb-1"></i>
+                                        <h4 class="mb-1">{{ current_user.hospital.staves|length }}</h4>
+                                        <p>total users</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <i class="las la-user-md la-2x mb-1"></i>
+                                        <h4 class="mb-1">{{ current_user.hospital.specialist|length }}</h4>
+                                        <p>total doctors</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <i class="las la-user-injured la-2x mb-1"></i>
+                                        <h4 class="mb-1">{{ current_user.hospital.patients.count() }}</h4>
+                                        <p>total patients</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><h5>recent patients</h5></div>
+                            <div class="card-body">
+                                <table
+                                        class="table table-hover table-responsive-md table-borderless"
+                                >
+                                    <tbody>
+                                    {% for patient in current_user.hospital.patients %}
+                                        <tr>
+                                            <td>
+                                                <img
+                                                        class="rounded-circle"
+                                                        src="/static/images/man.svg"
+                                                        loading="lazy"
+                                                />
+                                            </td>
+                                            <td>
+                                                <p>{{ patient.name }}</p>
+                                            </td>
+                                            <td><p class="text-muted">{{ patient.gender }}</p></td>
+                                            <td>
+                                                <p>{{ patient.phone_number }}</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <a class="view-more" href="{{ url_for("patients") }}"
+                                >more<i class="las la-angle-right"></i
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="card-header"><h5>doctors lists</h5></div>
+                            <div class="card-body">
+                                <table
+                                        class="table table-borderless table-hover table-responsive-md"
+                                >
+                                    <tbody>
+                                    {% for doctor in current_user.hospital.specialist %}
+                                        <tr>
+                                            <td>
+                                                <img
+                                                        class="rounded-circle"
+                                                        src="/static/images/man.svg"
+                                                        loading="lazy"
+                                                />
+                                            </td>
+                                            <td>
+                                                <p>{{ doctor.name }}</p>
+                                                <small class="text-muted">{{ doctor.speciality }}</small>
+                                            </td>
+                                            <td><p class="text-muted">{{ doctor.gender }}</p></td>
+                                            <td class="text-right"><p>{{ doctor.phone_number }}</p></td>
+                                            <td class="text-right">
+                                                <button class="btn btn-dark-red-f btn-sm">
+                                                    appointment
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm">
+                                                    <i class="las la-ellipsis-h"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <a class="view-more" href="{{ url_for("specialist") }}"
+                                >more<i class="las la-angle-right"></i
+                                ></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer>
+            <div class="page-footer text-center">
+                <div class="fixed-bottom shadow-sm">
+                    <a href="https://covid19.who.int" target="_blank"
+                    ><img src="/static/images/covid-19.svg"/><span
+                    >view COVID-19 info</span
+                    ></a
+                    >
+                </div>
+            </div>
+        </footer>
+    </div>
+</main>
+<script>
+    const socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on("redirect", function (data) {
+        console.log("jdododdo")
+        window.location.href = data.url;
+    });
+</script>
+</body>
+</html>

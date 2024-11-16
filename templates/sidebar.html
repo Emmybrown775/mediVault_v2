@@ -1,0 +1,45 @@
+<header>
+    <nav class="navbar navbar-expand-lg shadow-sm fixed-top"><a class="navbar-brand" href=""><img
+            src="/static/images/hospital-website.png"/></a>
+        <div class="navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link profile-dropdown" href="#" role="button" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"><img class="rounded-circle"
+                                                                                        src="/static/images/people.svg"/><span
+                        class="d">{{ current_user.name }}</span></a>
+                    <div class="dropdown">
+                        <div class="dropdown-menu shadow-lg profile-dropdown-menu" aria-labelledby="profile-dropdown"><a
+                                class="dropdown-item" href="#"><i class="las la-user mr-2"></i>profile</a><a
+                                class="dropdown-item" href="#"><i class="las la-cog mr-2"></i>settings</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="side-nav">
+    <ul class="list-group list-group-flush">
+        <a class="list-group-item" href="{{ url_for("dashboard") }}"
+                                               data-toggle="tooltip"
+                                               data-placement="bottom" title="home"><i
+            class="las la-shapes la-lw"></i><span>home</span></a>
+        <a class="list-group-item"
+           href="{{ url_for("patients") }}" data-toggle="tooltip"
+           data-placement="bottom" title="Patients"><i
+                class="las la-user-injured la-lw"></i><span>patients</span></a>
+        <a class="list-group-item"
+           href="{{ url_for("specialist") }}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           title="Specialists"><i
+                class="las la-clinic-medical la-lw"></i><span>specialists</span></a>
+        <a class="list-group-item"
+           href="{{ url_for("settings") }}" data-toggle="tooltip"
+           data-placement="bottom"
+           title="Settings"><i
+                class="las la-cogs la-lw"></i><span>settings</span></a>
+        <hr class="divider"/>
+
+    </ul>
+</div>

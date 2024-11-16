@@ -1,0 +1,280 @@
+<html>
+<head>
+    <title>Admin</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/css/vendors/bootstrap.min.css"/>
+    <link
+            rel="stylesheet"
+            href="/static/css/vendors/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/static/css/pages/layout.css"/>
+    <link rel="icon" href="/static/images/covid-19.ico"/>
+    <script src="/static/js/vendors/jquery.min.js"></script>
+    <script src="/static/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/global.js"></script>
+    <link rel="stylesheet" href="/static/css/pages/details.css"/>
+</head>
+<body>
+<main>
+    {% include "sidebar.html" %}
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="section row title-section">
+                <div class="col-md-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="patients.html">patients</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ patient.name }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-4">
+                    <button onclick="makeInputsEditable()" class="btn btn-dark-red-f-gr">
+                        <i class="las la-edit"></i>edit patient
+                    </button>
+                </div>
+            </div>
+            <div class="section patient-details-section">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form action="{{ url_for("patient", patient_id=patient.id) }}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="form" value="data">
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-md-3 text-center">
+                                            <div class="mini-card text-center">
+                                                <div class="card-header">
+                                                    {% if not patient.profile_url %}
+                                                        <img
+                                                                class="rounded-circle"
+                                                                src="/static/images/people.svg"
+                                                                loading="lazy"
+                                                        />
+                                                    {% else %}
+                                                         <img
+                                                                class="rounded-circle"
+                                                                src="{{ patient.profile_url }}"
+                                                                loading="lazy"
+                                                        />
+                                                    {% endif %}
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group">
+                                                        <label>New Profile Picture</label
+                                                        ><input
+                                                            class="form-control"
+                                                            type="file"
+                                                            name="profile_pic"
+                                                    />
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 patients-details-card-wrapper">
+                                            <div class="mini-card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Name</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.name }}"
+                                                                    name="name"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Email</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.email }}"
+                                                                    name="email"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Age</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.age }}"
+                                                                    name="age"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+
+                                                                <label>gender</label>
+
+                                                                <select
+                                                                        disabled
+                                                                        class="form-control"
+                                                                        name="gender"
+                                                                >
+                                                                    <option value="{{ patient.gender }}">{{ patient.gender }}</option>
+                                                                    {% if patient.gender == "Male" %}
+                                                                        <option value="Female">Female</option>
+                                                                    {% else %}
+                                                                        <option value="Male">Male</option>
+                                                                    {% endif %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>date of birth</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    type="date"
+                                                                    value="{{ patient.date_of_birth }}"
+                                                                    name="dob"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>phone number</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    type="tel"
+                                                                    value="{{ patient.phone_number }}"
+                                                                    name="phone_number"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>address</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.address }}"
+                                                                    name="address"
+                                                            />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>city</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.city }}"
+                                                                    name="city"
+                                                            />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>zip code</label
+                                                                ><input
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.zip_code }}"
+                                                                    name="zip_code"
+                                                            />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>registered date</label>
+                                                                <input
+                                                                        id="reg-date"
+                                                                        class="form-control"
+                                                                        readonly="readonly"
+                                                                        type="date"
+                                                                        value="{{ patient.registered_date }}"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>UUID</label
+                                                                ><input
+                                                                    id="uuid"
+                                                                    class="form-control"
+                                                                    readonly="readonly"
+                                                                    value="{{ patient.id}}"
+                                                                    name="card_uuid"
+                                                            />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>submit</label>
+                                                            <button id="submitButton"  class="btn btn-success"
+                                                                    style="display: none;" onclick="submitForm()">
+                                                                <i class="las la-check"></i> Submit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="card files-card">
+                            <div class="card-header">
+                                <h5>
+                                    Medical Records
+                                    <button onclick="newFile()" class="btn btn-dark-red-f btn-sm">
+                                        <i class="las la-file-medical"></i>add file
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="medical_records" class="card-body">
+                                <div class="list-group list-group-flush">
+
+                                    {% for file in patient.files %}
+                                        <a class="list-group-item" href="{{ file.url }}">
+                                            <i class="las la-file-excel"></i>
+                                            {{ file.name }}
+                                            <div class="float-right">
+                                                <small class="text-muted">{{ file.size }}mb</small>
+
+                                            </div>
+                                        </a
+                                        >
+                                    {% endfor %}
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+<script src="/static/js/details.js"></script>
+</body>
+</html>

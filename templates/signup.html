@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="/static/css/pages/login.css">
+</head>
+<body>
+<div class="container">
+    <div class="left-section">
+        <img src="/static/images/sign_up.png" alt="Hot Air Balloon" class="balloon-image">
+    </div>
+    <div class="right-section">
+        <h1>Create your Free Account</h1>
+        <form class="signup-form" action="{{ url_for("signup") }}", method="post">
+            <div class="form-group">
+                <label for="email">Name</label>
+                {% if form.name.errors %}
+                    <ul class="errors">
+                        {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                {% if form.email.errors %}
+                    <ul class="errors">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                {% if form.password.errors %}
+                    <ul  class="errors">
+                        {% for error in form.password.errors %}
+                            <li style="color: red">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <input type="password" id="password" name="password" placeholder="Enter your Password here">
+            </div>
+            <div class="form-group">
+                <label for="email">Confirm Password</label>
+                {% if form.confirm_password.errors %}
+                    <ul class="errors">
+                        {% for error in form.confirm_password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+            </div>
+            <div class="form-group">
+                <label for="email">Reader UUID</label>
+                {% if form.reader_uuid.errors %}
+                    <ul class="errors">
+                        {% for error in form.reader_uuid.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+            </div>
+            <button type="submit" class="create-account-btn">Create Account</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="{{ url_for("login") }}">Login</a></p>
+
+    </div>
+</div>
+</body>
+</html>
