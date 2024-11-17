@@ -297,6 +297,7 @@ def new_patient():
                 zip_code=form.zip_code.data,
                 registered_date=datetime.now(),
             )
+            current_user.hospital.patients.append(new_new_patient)
             db.session.add(new_new_patient)
             db.session.commit()
             return redirect(url_for("patient", patient_id=new_new_patient.id))

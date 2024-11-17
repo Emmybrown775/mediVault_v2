@@ -23,7 +23,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+                <input  id="email" name="name" placeholder="Enter your Name here">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -34,7 +34,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+                <input id="email" name="email" placeholder="Enter your Email here">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -56,7 +56,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+                <input type="password" id="email" name="confirm_password" placeholder="Re-Enter your Password here">
             </div>
             <div class="form-group">
                 <label for="email">Reader UUID</label>
@@ -67,9 +67,9 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <input type="email" id="email" name="email" placeholder="Enter your Email here">
+                <input  id="email" name="reader_uuid" placeholder="Enter Hospital's Id here">
             </div>
-            <button type="submit" class="create-account-btn">Create Account</button>
+            <button type="submit" class="create-account-btn" >Create Account</button>
         </form>
         <p class="login-link">Already have an account? <a href="{{ url_for("login") }}">Login</a></p>
 
